@@ -86,3 +86,52 @@ function viewRoles() {
     });
 };
 
+function viewDep() {
+    console.log('selecting all departments');
+    connection.query('SELECT id as `ID`, department AS `Department` FROM departments', function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        finish();
+    });
+};
+
+function addEmployee() {
+    connection.query('SELECT id, title FROM roles', function (err, res) {
+        if (err) throw err;
+        const roles = res.map(element => element.title)
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'firstName',
+                message: "what is the new employee's first name",
+            },
+            {
+                type: 'input',
+                name: 'lastName',
+                message: "what is the new employee's last name"
+            },
+            {
+                type: 'list',
+                name: 'roles',
+                message: 'what is their role',
+                choices: roles
+            }
+        ]).then(answers => {
+            const role = res.find(element => {
+                return element.title === answers.roles
+            });
+            console.log(role.id);
+            const newEmployee = {
+                firstName: answers.firstName,
+                lastName: answers.lastName,
+                roleId: role.id
+            };
+            connection.query('INSERT INTO employees SET ?', newEmployee, (err, success) => {
+                if (err) throw err;
+                console.log(`${newEmployee.firstName} was added successfully`);
+                finish();
+            });
+        });
+    });
+};
+
