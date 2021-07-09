@@ -10,3 +10,6 @@ To use the tool type node index.js into your terminal.
 #License
 MIT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT).
 
+#Screenshot
+![screenshot](screenshot/screenshot.png)
+
