@@ -135,3 +135,34 @@ function addEmployee() {
     });
 };
 
+function addRole() {
+    connection.query('SELECT * FROM departments', function (err, res) {
+        if (err) throw err;
+        const depratments = res.map(element => {
+            return element.id
+        })
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'what is their title'
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'what is their salary'
+            },
+            {
+                type: 'list',
+                name: 'depId',
+                message: 'what department are they in'
+            }
+        ]).then(function (answer) {
+            connection.query('INSERT INTO roles SET ?', answer, function(err) {
+                if (err) throw err;
+                console.log(`${answer.title} was added`);
+                finish();
+            });
+        });
+    });
+};
