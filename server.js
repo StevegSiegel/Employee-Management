@@ -68,3 +68,21 @@ function options() {
     })
 };
 
+function viewEmployee() {
+    console.log('selecting all employees');
+    connection.query("SELECT firstName AS `First Name`, lastName AS `Last Name`, roleId AS `Role Id` FROM employees", function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        finish();
+    });
+};
+
+function viewRoles() {
+    console.log('selecting all roles');
+    connection.query('SELECT title AS `Title`, salary AS `Salary`, depId AS `Department Id` FROM roles', function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        finish();
+    });
+};
+
